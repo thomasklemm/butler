@@ -1,7 +1,7 @@
 require 'servely/version'
-require 'servely/server'
-require 'servely/file_handler'
-require 'servely/file'
+require 'servely/static'
+require 'servely/handler'
+require 'servely/asset'
 
 module Servely
   #

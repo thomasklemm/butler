@@ -1,10 +1,11 @@
+# Gem
 require 'bundler/gem_tasks'
 
 # Tests
-require 'rake/testtask'
-
-Rake::TestTask.new do |t|
-  t.pattern = 'test/*_test.rb'
+require 'guard'
+task :test do
+  Guard.setup
+  Guard.guards('minitest').run_all
 end
 
 # Alias default task to test
