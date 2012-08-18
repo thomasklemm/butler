@@ -1,16 +1,15 @@
 require 'rack/utils'
 require 'active_support/core_ext/uri'
-
-require 'file'
+require 'servely/asset'
 
 module Servely
-  class FileHandler
+  class Handler
     def initialize(root, options={})
       @root          = root.chomp('/')
       @compiled_root = /^#{Regexp.escape(root)}/
       @header_rules  = options[:header_rules] || {}
       @headers       = {}
-      @file_server   = Servely::File.new(@root, headers: @headers)
+      @file_server   = Servely::Asset.new(@root, headers: @headers)
     end
 
     def match?(path)
@@ -28,6 +27,7 @@ module Servely
     end
 
     def call(env)
+      @path = env['PATH_INFO']
       set_headers
       @file_server.call(env)
     end
@@ -61,11 +61,11 @@ module Servely
         when Array
           # Extensions
           extensions = rule.join('|')
-          # TODO: test
           set_header(result) if @path.match(/\.(#{extensions})\z/)
         when String
           # Folder
-          set_header(result) if @path.gsub(@root, '').start_with?(rule)
+          path = ::Rack::Utils.unescape(@path)
+          set_header(result) if (path.start_with?(rule) || path.start_with?('/' + rule))
         else
         end
       end

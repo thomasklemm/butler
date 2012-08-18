@@ -222,7 +222,5 @@ describe Servely::Asset do
       res['Content-Range'].must_equal 'bytes */18'
     end
 
-    # Skipped: should allow files with .. in their names
   end
-
 end

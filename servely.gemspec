@@ -19,10 +19,10 @@ Gem::Specification.new do |gem|
 
   # Dependencies
   gem.add_dependency 'rack'
-  gem.add_dependency 'active_support'
 
   # Tests
   gem.add_development_dependency 'minitest'
   gem.add_development_dependency 'guard-minitest'
   gem.add_development_dependency 'turn'
+  gem.add_development_dependency 'rails', '~> 3.2.8'
 end
