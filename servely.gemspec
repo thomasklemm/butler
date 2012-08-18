@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Servely::VERSION
   gem.authors       = ["Thomas Klemm"]
   gem.email         = ["github@tklemm.eu"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = "TODO: Write a gem description"
+  gem.summary       = "TODO: Write a gem summary"
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
@@ -19,10 +19,10 @@ Gem::Specification.new do |gem|
 
   # Dependencies
   gem.add_dependency 'rack'
+  gem.add_dependency 'activesupport'
 
   # Tests
   gem.add_development_dependency 'minitest'
   gem.add_development_dependency 'guard-minitest'
   gem.add_development_dependency 'turn'
-  gem.add_development_dependency 'rails', '~> 3.2.8'
 end

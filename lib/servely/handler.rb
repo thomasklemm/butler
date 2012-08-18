@@ -3,19 +3,29 @@ require 'active_support/core_ext/uri'
 require 'servely/asset'
 
 module Servely
+  #
+  # Servely::Handler
+  #
+  # The link between Servely::Static and Servely::Asset
+  # Transforms HTTP header rules into actual HTTP headers
+  # for a single file to be set by Servely::Asset
+  #
+  # Code adapted from Rails' ActionDispatch::FileHandler
+  #
   class Handler
     def initialize(root, options={})
       @root          = root.chomp('/')
       @compiled_root = /^#{Regexp.escape(root)}/
-      @header_rules  = options[:header_rules] || {}
       @headers       = {}
+      @header_rules  = options[:header_rules] || {}
       @file_server   = Servely::Asset.new(@root, headers: @headers)
     end
 
     def match?(path)
       path = path.dup
 
-      full_path = path.empty? ? @root : File.join(@root, escape_glob_chars(unescape_path(path)))
+      full_path = path.empty? ? @root : File.join(@root,
+        escape_glob_chars(unescape_path(path)))
       paths = "#{full_path}#{ext}"
 
       matches = Dir[paths]
@@ -55,17 +65,18 @@ module Servely
         when :global
           set_header(result)
         when :fonts
-          set_header(result) if @path.match(/\.(ttf|otf|eot|woff|svg)\z/)
+          set_header(result) if @path.match(%r{\.(?:ttf|otf|eot|woff|svg)\z})
         when Regexp
           set_header(result) if @path.match(rule)
         when Array
           # Extensions
           extensions = rule.join('|')
-          set_header(result) if @path.match(/\.(#{extensions})\z/)
+          set_header(result) if @path.match(%r{\.(#{extensions})\z})
         when String
           # Folder
           path = ::Rack::Utils.unescape(@path)
-          set_header(result) if (path.start_with?(rule) || path.start_with?('/' + rule))
+          set_header(result) if
+            (path.start_with?(rule) || path.start_with?('/' + rule))
         else
         end
       end
@@ -76,5 +87,6 @@ module Servely
         @headers[field] = content
       end
     end
+
   end
 end

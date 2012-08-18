@@ -3,6 +3,19 @@ require 'rack/utils'
 require 'rack/mime'
 
 module Servely
+  #
+  # Servely::Asset
+  #
+  # Sends a single requested file out to the user
+  # The code has been largely taken from Rack::File
+  # but adjusted to support sending custuom HTTP headers
+  #
+  # Usage:
+  #   Servely::Asset.new(root_directory, headers: {
+  #     'Cache-Control' => 'public, max-age=31536000',
+  #     'Some custom header' => 'Content for some custom header'
+  #   })
+  #
   class Asset
     SEPS = Regexp.union(*[File::SEPARATOR, File::ALT_SEPARATOR].compact)
     ALLOWED_VERBS = %w[GET HEAD]
@@ -92,7 +105,8 @@ module Servely
         # Partial content:
         @range = ranges[0]
         response[0] = 206
-        response[1]["Content-Range"] = "bytes #{@range.begin}-#{@range.end}/#{size}"
+        response[1]["Content-Range"] =
+          "bytes #{@range.begin}-#{@range.end}/#{size}"
         size = @range.end - @range.begin + 1
       end
 
