@@ -1,9 +1,6 @@
-require 'rails'
-require 'butler'
-
 module Butler
   class Railtie < ::Rails::Railtie
-
+    puts 'Processing Railtie...'
     # config.butler = ActiveSupport::OrderedOptions.new # enable namespaced configuration in Rails environments
 
     # # Config
