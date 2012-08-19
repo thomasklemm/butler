@@ -1,3 +1,5 @@
+require 'rails/all'
+
 module Butler
   class Railtie < ::Rails::Railtie
     puts 'Processing Railtie...'
@@ -12,7 +14,6 @@ module Butler
 
     initializer "butler.configure_rails_initialization" do |app|
       app.middleware.swap 'ActionDispatch::Static', 'Butler::Static'
-      raise app.inspect
       # if use_butler
       #   if defined? ActionDispatch::Static
       #     if defined? Rack::Cache # will not work
