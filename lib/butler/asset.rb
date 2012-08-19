@@ -2,16 +2,16 @@ require 'time'
 require 'rack/utils'
 require 'rack/mime'
 
-module Servely
+module Butler
   #
-  # Servely::Asset
+  # Butler::Asset
   #
   # Sends a single requested file out to the user
   # The code has been largely taken from Rack::File
   # but adjusted to support sending custuom HTTP headers
   #
   # Usage:
-  #   Servely::Asset.new(root_directory, headers: {
+  #   Butler::Asset.new(root_directory, headers: {
   #     'Cache-Control' => 'public, max-age=31536000',
   #     'Some custom header' => 'Content for some custom header'
   #   })

@@ -1,12 +1,12 @@
 require 'minitest_helper'
-require 'servely/asset'
+require 'butler/asset'
 require 'rack/mock'
 
-describe Servely::Asset do
+describe Butler::Asset do
   DOCROOT = File.expand_path(File.dirname(__FILE__))
 
   def file(*args)
-    Servely::Asset.new(*args)
+    Butler::Asset.new(*args)
   end
 
   before do
@@ -68,7 +68,7 @@ describe Servely::Asset do
     end
 
     it 'should set provided headers' do
-      file = Servely::Asset.new(DOCROOT,
+      file = Butler::Asset.new(DOCROOT,
         headers: {'Cache-Control' => 'public, max-age=42'})
       req = Rack::MockRequest.new(file)
 
@@ -135,7 +135,7 @@ describe Servely::Asset do
       res = @file.get('/../minitest_helper.rb')
       res.status.must_equal 404
 
-      res = @file.get('../servely/files/index.html')
+      res = @file.get('../butler/files/index.html')
       res.status.must_equal 404
 
       # Ensure file existance
@@ -194,7 +194,7 @@ describe Servely::Asset do
       file = 'files/index.html'
       path = File.join(DOCROOT, file)
       env = Rack::MockRequest.env_for(file)
-      status, _, body = Servely::Asset.new(DOCROOT).call(env)
+      status, _, body = Butler::Asset.new(DOCROOT).call(env)
 
       status.must_equal 200
       body.must_respond_to :to_path

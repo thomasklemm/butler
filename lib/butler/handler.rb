@@ -1,14 +1,14 @@
 require 'rack/utils'
 require 'active_support/core_ext/uri'
-require 'servely/asset'
+require 'butler/asset'
 
-module Servely
+module Butler
   #
-  # Servely::Handler
+  # Butler::Handler
   #
-  # The link between Servely::Static and Servely::Asset
+  # The link between Butler::Static and Butler::Asset
   # Transforms HTTP header rules into actual HTTP headers
-  # for a single file to be set by Servely::Asset
+  # for a single file to be set by Butler::Asset
   #
   # Code adapted from Rails' ActionDispatch::FileHandler
   #
@@ -18,7 +18,7 @@ module Servely
       @compiled_root = /^#{Regexp.escape(root)}/
       @headers       = {}
       @header_rules  = options[:header_rules] || {}
-      @file_server   = Servely::Asset.new(@root, headers: @headers)
+      @file_server   = Butler::Asset.new(@root, headers: @headers)
     end
 
     def match?(path)

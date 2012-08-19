@@ -1,17 +1,16 @@
 require 'rack/utils'
-require 'active_support/core_ext/uri'
-require 'servely/handler'
+require 'butler/handler'
 
-module Servely
+module Butler
   #
-  # Servely::Static
+  # Butler::Static
   #
   # is a Static Web Server based on ActionDispatch::Static.
   # It is intended to be used with Rails in an environment
   # where serving static assets through a specialized web
   # server such as nginx is technically not an option.
   #
-  # Servely::Static extends ActionDispatch::Static's func-
+  # Butler::Static extends ActionDispatch::Static's func-
   # tionality to allow a the developer to set custom rules
   # for the HTTP headers that the files sent should carry.
   #
@@ -37,7 +36,7 @@ module Servely
   #
   # Usage:
   #  config.middleware.delete ActionDispatch::Static
-  #  config.middleware.insert_before Rack::Cache, Servely::Static
+  #  config.middleware.insert_before Rack::Cache, Butler::Static
   #
   #  # Provide the header rules like so
   #  config.assets.header_rules = {
@@ -79,7 +78,7 @@ module Servely
     def initialize(app, path, options={})
       @app = app
       @header_rules = options[:header_rules] || {}
-      @file_handler = Servely::Handler.new(path, header_rules: @header_rules)
+      @file_handler = Butler::Handler.new(path, header_rules: @header_rules)
     end
 
     def call(env)
