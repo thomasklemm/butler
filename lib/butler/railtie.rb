@@ -1,26 +1,20 @@
 require 'rails'
+require 'butler'
 
 module Butler
-  #
-  # Butler::Railtie
-  #
-  # integrate Butler with Rails
-  # and is loaded only when Butler detects
-  # a Rails environment
-  #
   class Railtie < Rails::Railtie
 
-    config.butler = ActiveSupport::OrderedOptions.new # enable namespaced configuration in Rails environments
+    # config.butler = ActiveSupport::OrderedOptions.new # enable namespaced configuration in Rails environments
 
-    # Config
-    use_butler   = Rails.application.config.assets.use_butler || nil
-    path         = Rails.application.config.paths['public'].first
+    # # Config
+    # use_butler   = Rails.application.config.assets.use_butler || nil
+    # path         = Rails.application.config.paths['public'].first
 
-    header_rules = Rails.application.config.assets.header_rules || {}
-    options      = { header_rules: header_rules }
+    # header_rules = Rails.application.config.assets.header_rules || {}
+    # options      = { header_rules: header_rules }
 
-    initializer "butler.configure" do |app|
-      app.config.middleware.use "Butler::Static"
+    initializer "butler.configure_rails_initialization" do |app|
+      app.middleware.swap 'ActionDispatch::Static', 'Butler::Static'
 
       # if use_butler
       #   if defined? ActionDispatch::Static
