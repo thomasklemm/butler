@@ -2,7 +2,7 @@ require 'rails'
 require 'butler'
 
 module Butler
-  class Railtie < Rails::Railtie
+  class Railtie < ::Rails::Railtie
 
     # config.butler = ActiveSupport::OrderedOptions.new # enable namespaced configuration in Rails environments
 
@@ -15,7 +15,7 @@ module Butler
 
     initializer "butler.configure_rails_initialization" do |app|
       app.middleware.swap 'ActionDispatch::Static', 'Butler::Static'
-
+      raise app.inspect
       # if use_butler
       #   if defined? ActionDispatch::Static
       #     if defined? Rack::Cache # will not work
