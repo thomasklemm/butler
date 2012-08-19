@@ -78,10 +78,11 @@ module Butler
     def initialize(app, options={})
       @app = app
       path = options[:path] || ''
+      # CLEAN THIS MESS UP
       path ||= Rails.application.config.paths['public'].first if defined? Rails
       @header_rules = {}
       if defined? Rails
-         header_rules = Rails.application.confg.assets.header_rules
+         header_rules = Rails.application.config.assets.header_rules
          @header_rules.merge(header_rules) if header_rules
       end
       @header_rules = @header_rules.merge(options[:header_rules]) if options[:header_rules]
