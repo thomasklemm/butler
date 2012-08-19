@@ -12,8 +12,8 @@ module Butler
     # header_rules = Rails.application.config.assets.header_rules || {}
     # options      = { header_rules: header_rules }
 
-    initializer "butler.configure_rails_initialization" do |app|
-      app.middleware.swap 'ActionDispatch::Static', 'Butler::Static'
+    initializer "butler.add_middleware" do |app|
+      app.middleware.use Static
       # if use_butler
       #   if defined? ActionDispatch::Static
       #     if defined? Rack::Cache # will not work
@@ -27,5 +27,6 @@ module Butler
       #   end
       # end
     end
+
   end
 end
