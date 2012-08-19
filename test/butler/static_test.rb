@@ -185,7 +185,7 @@ class StaticTest < MiniTest::Unit::TestCase
     /\.(css|erb)\z/ => {'Cache-Control' => 'public, max-age=600'},
   }
 
-  App = Butler::Static.new(DummyApp, path: "#{FIXTURE_LOAD_PATH}/public", header_rules: header_rules)
+  App = Butler::Static.new(DummyApp, "#{FIXTURE_LOAD_PATH}/public", header_rules: header_rules)
 
   def setup
     @app = App
