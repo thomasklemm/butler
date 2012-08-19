@@ -75,8 +75,9 @@ module Butler
   #        general global HTTP header settings
   #
   class Static
-    def initialize(app, path, options={})
+    def initialize(app, options={})
       @app = app
+      path = options[:path] || Rails.application.config.paths['public'].first
       @header_rules = options[:header_rules] || {}
       @file_handler = Butler::Handler.new(path, header_rules: @header_rules)
     end
