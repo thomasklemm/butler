@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Butler::VERSION
   gem.authors       = ["Thomas Klemm"]
   gem.email         = ["github@tklemm.eu"]
-  gem.description   = "Butler is a Rack Middleware that serves static assets for your Rails app."
-  gem.summary       = "Butler is a Rack Middleware that serves static assets for your Rails app. It allows you to set HTTP headers for individual files or folders based on rules."
+  gem.description   = "Butler is a Rack Middleware that serves static assets for your Rails app. It allows you to set HTTP headers for individual files or folders based on rules."
+  gem.summary       = "butler_static-#{ Butler::Version }"
   gem.homepage      = "https://github.com/thomasklemm/butler"
 
   gem.files         = `git ls-files`.split($/)
