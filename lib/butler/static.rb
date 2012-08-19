@@ -34,7 +34,8 @@ module Butler
   # the request will bubble up to the Rails stack to decide
   # how to handle it
   #
-  # Usage:
+  # Usage with Rails:
+  #  # config/environment/production.rb
   #  config.middleware.delete ActionDispatch::Static
   #  config.middleware.insert_before Rack::Cache, Butler::Static
   #
@@ -75,13 +76,12 @@ module Butler
   #        general global HTTP header settings
   #
   class Static
-    def initialize(app, path=nil, options={})
-      @app = app
-      path ||= Rails.application.config.paths['public'].first if defined? Rails
-      header_rules = {}
-      header_rules = Rails.application.config.assets.header_rules if defined? Rails
-      header_rules = options[:header_rules] if options[:header_rules]
-      @file_handler = Butler::Handler.new(path, header_rules: header_rules)
+    def initialize(app, path, options={})
+      @app = app # Rails app
+      config = {}
+      # Rules for setting HTTP Headers on files
+      config[:header_rules] = options[:header_rules] if options[:header_rules]
+      @file_handler = Butler::Handler.new(path, config)
     end
 
     def call(env)

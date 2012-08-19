@@ -19,6 +19,7 @@ Gem::Specification.new do |gem|
 
   # Dependencies
   gem.add_dependency 'rack'
+  gem.add_dependency 'rails', '>= 3.1.0'
 
   # Tests
   gem.add_development_dependency 'minitest'
@@ -26,6 +27,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'turn'
   # Only ActiveSupport and ActionController nescessary
   # gem.add_development_dependency 'rails', '~> 3.2.8'
-  gem.add_development_dependency 'activesupport', '~> 3.2.8'
-  gem.add_development_dependency 'actionpack', '~> 3.2.8'
+  # gem.add_development_dependency 'activesupport', '~> 3.2.8'
+  # gem.add_development_dependency 'actionpack', '~> 3.2.8'
 end
