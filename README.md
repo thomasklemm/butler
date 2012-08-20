@@ -32,7 +32,7 @@ Or install it yourself as:
 
 ## Usage
 
-### Configuration
+<!-- ### Configuration
 
 ```ruby
 # config/environment/production.rb
@@ -47,6 +47,34 @@ config.assets.header_rules = {
   rule => {http_field => content},
   rule => {http_field => content}
 }
+``` -->
+
+### Integration & Configuration in a Rails environment
+
+Tell Rails where to insert Butler in the middleware stack and see if it is working(`$ rake middleware`).
+
+```ruby
+# config/environment/production.rb
+
+# Butler Config
+require 'butler'
+config.butler = ActiveSupport::OrderedOptions.new # enable namespaced configuration
+config.butler.enable_butler = true
+config.butler.header_rules = {
+  :global => {'Cache-Control' => 'public, max-age=31536000'},
+  :fonts  => {'Access-Control-Allow-Origin' => '*'}
+}
+
+# Use Butler
+enable_butler = config.butler.enable_butler
+path = config.paths['public'].first
+options = {}
+options[:header_rules] = config.butler.header_rules
+
+if enable_butler
+  config.middleware.delete ActionDispatch::Static # delete ActionDispatch::Static when deploying to Heroku
+  config.middleware.insert_before Rack::Cache, ::Butler::Static, path, options
+end
 ```
 
 ### Providing Rules for setting HTTP Headers
@@ -111,8 +139,7 @@ config.assets.header_rules = {
   :fonts  => {'Access-Control-Allow-Origin' => '*'}
 }
 ```
-That's it. I hope you like Butler.
-Shoot me an [email](github@tklemm.eu) or [tweet](https://www.twitter.com/thomasjklemm) if you have any questions or thoughts about how to improve Butler. Enjoy your life!
+[TODO] Implement Railtie so that this example is working in 0.1.0
 
 ## Contributing
 
@@ -123,3 +150,8 @@ Shoot me an [email](github@tklemm.eu) or [tweet](https://www.twitter.com/thomasj
 4. Commit your changes (`git commit -am 'Add some feature'`)
 5. Push to the branch (`git push origin my-new-feature`)
 6. Create new Pull Request
+
+## Thanks
+
+That's it. I hope you like Butler.
+Shoot me an [email](github@tklemm.eu) or [tweet](https://www.twitter.com/thomasjklemm) if you have any questions or thoughts about how to improve Butler. Enjoy your life!
