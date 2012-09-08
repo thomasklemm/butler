@@ -120,27 +120,6 @@ There are a few way to set rules for all files or files in a certain folder or a
        general global HTTP header settings
 ```
 
-## Complete Example Use Case
-
-The example code below is from a Rails app deployed to [Heroku](http://www.heroku.com) using butler to serve the precompiled assets.
-Cache-Control headers are set on all served files, and Access-Control Headers on Fonts / Icon Fonts.
-
-```ruby
-# config/environment/production.rb
-
-# Use Butler
-# to serve precompiled assets
-config.assets.use_butler = true
-
-# Rules for HTTP Headers
-# to be set on static files sent by Butler
-config.assets.header_rules = {
-  :global => {'Cache-Control' => 'public, max-age=31536000'},
-  :fonts  => {'Access-Control-Allow-Origin' => '*'}
-}
-```
-[TODO] Implement Railtie so that this example is working in 0.1.0
-
 ## Contributing
 
 1. Fork it
