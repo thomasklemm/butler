@@ -62,7 +62,9 @@ config.butler = ActiveSupport::OrderedOptions.new # enable namespaced configurat
 config.butler.enable_butler = true
 config.butler.header_rules = {
   :global => {'Cache-Control' => 'public, max-age=31536000'},
-  :fonts  => {'Access-Control-Allow-Origin' => '*'}
+  :fonts  => {'Access-Control-Allow-Origin' => '*',
+      'Access-Control-Allow-Methods' => 'GET, PUT, DELETE',
+      'Access-Control-Allow-Headers' => 'Origin, Accept, Content-Type'}
 }
 
 # Use Butler
